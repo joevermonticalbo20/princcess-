@@ -1,0 +1,191 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --text-dark-navy: #151435;
+        --card-bg: #f7f7f7; 
+        --border-color: #c0c0c0;
+        --restore-color: #151435; 
+        --delete-color: #e74c3c; 
+    }
+
+    .content-box {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 650px; 
+    }
+
+    /*Header*/
+    .archive-container h2 {
+        color: var(--text-dark-navy);
+        margin-bottom: 30px;
+        font-size: 24px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: center; 
+    }
+    
+    /* === Notes List Area === */
+    .notes-list {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* === Archive Card (Individual Note Box) === */
+    .archive-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 10px #151435;
+        transition: box-shadow 0.3s;
+        /* Ensure the card is visible */
+        opacity: 1; 
+    }
+
+    .archive-card:hover {
+        box-shadow: 0 4px 15px #151435;
+    }
+
+    .archive-card h5 {
+        color: var(--text-dark-navy);
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 8px;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 5px;
+        word-wrap: break-word; /* Tiyakin na hindi mag-o-overflow ang mahabang title */
+    }
+
+    .archive-card p {
+        color: #151435;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        word-wrap: break-word; /* Tiyakin na hindi mag-o-overflow ang mahabang content */
+    }
+    
+    /* === Button Styles (Restore/Delete Actions Only) === */
+    .btn-action {
+        display: inline-block;
+        padding: 8px 15px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-right: 5px;
+    }
+
+    .btn-restore {
+        background-color: var(--restore-color);
+        color: #fff;
+    }
+
+    .btn-delete {
+        background-color: var(--delete-color);
+        color: #fff;
+    }
+
+    /* === Empty State Alert === */
+    .alert-info-custom {
+        background-color: #e6f0ff;
+        border: 1px solid var(--text-dark-navy);
+        color: var(--text-dark-navy);
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        font-weight: 500;
+        margin-top: 20px;
+        width: 100%;
+    }
+</style>
+
+<div class="archive-container">
+    <h2>Archived Notes</h2>
+
+    <div class="notes-list">
+        {% if archived_notes %}
+            {% for note in archived_notes %}
+                <div class="archive-card">
+                    <h5>{{ note.title }}</h5>
+                    <p>{{ note.content }}</p>
+                    
+                    <form method="post" action="{{ url_for('main.restore_note', note_id=note.id) }}" style="display:inline-block" class="restore-form">
+                        <button type="submit" class="btn-action btn-restore">Restore</button>
+                    </form>
+
+                    <form method="post" action="{{ url_for('main.delete_note', note_id=note.id) }}" style="display:inline-block" class="delete-form">
+                        <button type="submit" class="btn-action btn-delete">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert-info-custom">No notes currently in the archive.</div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // --- SweetAlert Confirmation for RESTORE ---
+        document.querySelectorAll(".restore-form").forEach(form => {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: "Confirm Restore",
+                        html: "Do you want to restore this note to your active list?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, Restore",
+                        cancelButtonText: "Cancel",
+                        confirmButtonColor: '#27ae60', 
+                        cancelButtonColor: '#555',
+                        background: '#fff',
+                        color: '#151435'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit(); 
+                        }
+                    });
+                }
+            });
+        });
+
+        // --- SweetAlert Confirmation for PERMANENT DELETE ---
+        document.querySelectorAll(".delete-form").forEach(form => {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: "Confirm Permanent Delete",
+                        html: "This action is irreversible. Are you sure you want to **permanently delete** this note?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, Delete",
+                        cancelButtonText: "Cancel",
+                        confirmButtonColor: '#e74c3c', 
+                        cancelButtonColor: '#555',
+                        background: '#fff',
+                        color: '#151435'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit(); 
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

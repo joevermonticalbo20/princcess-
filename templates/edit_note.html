@@ -1,0 +1,155 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --text-dark-navy: #151435; /* Dark Navy */
+        --light-blue: #d7e6fa;     /* Light Blue */
+        --border-color: #151435;  /* Softer Blue Border */
+        --error-color: #e74c3c;    /* Red for Errors */
+        --hover-navy: #151435;
+    }
+
+    .content-box {
+        width: 100%;
+        max-width: 650px;
+        text-align: left; 
+        background-color: #fff;
+        border: 1px solid var(--text-dark-navy);
+        border-radius: 20px;
+        padding: 40px 35px; 
+        box-shadow: 0 0 20px rgba(21, 20, 53, 0.25);
+    }
+    
+    /* === Header === */
+    .content-box h3 {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--text-dark-navy);
+        margin-bottom: 25px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    /* === Form Inputs (Same as previous fix) === */
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid var(--border-color); 
+        border-radius: 10px;
+        background: #fff;
+        color: var(--text-dark-navy);
+        font-size: 15px;
+        margin-bottom: 10px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--text-dark-navy);
+        box-shadow: 0 0 10px rgba(21, 20, 53, 0.2);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .error-message {
+        color: var(--error-color); 
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        display: none;
+        margin-top: -5px; 
+    }
+
+    /* === Buttons (Same as previous fix) === */
+    .btn-primary {
+        width: 100%;
+        background: var(--text-dark-navy);
+        color: var(--light-blue);
+        border: 2px solid var(--text-dark-navy);
+        border-radius: 50px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+        display: block;
+    }
+
+    .btn-primary:hover {
+        background: var(--hover-navy); 
+        color: #fff;
+        box-shadow: 0 5px 15px rgba(21, 20, 53, 0.4);
+    }
+
+    .btn-link {
+        display: block;
+        text-align: center;
+        background: transparent;
+        color: var(--text-dark-navy);
+        font-weight: 500;
+        text-decoration: underline;
+        margin-top: 20px;
+        transition: 0.3s;
+    }
+
+    .btn-link:hover {
+        color: var(--hover-navy);
+        text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+        .content-box {
+            padding: 30px 25px;
+        }
+    }
+</style>
+
+<h3>Edit Note</h3>
+<form id="editForm" method="post">
+    <div class="mb-3">
+        <input class="form-control" id="title" name="title" value="{{ note.title }}" placeholder="Note Title" required>
+        <div class="error-message" id="titleError">Title cannot be empty.</div>
+    </div>
+    
+    <div class="mb-4">
+        <textarea class="form-control" id="content" name="content" placeholder="Write your note here..." required>{{ note.content }}</textarea>
+        <div class="error-message" id="contentError">Content cannot be empty.</div>
+    </div>
+
+    <button class="btn-primary" type="submit">Save Changes</button>
+    <a class="btn-link" href="{{ url_for('main.home') }}">Cancel</a>
+</form>
+
+<script>
+    // JS Validation (No changes needed, ginagamit pa rin nito ang form IDs)
+    document.getElementById("editForm").addEventListener("submit", function(e) {
+        const title = document.getElementById("title");
+        const content = document.getElementById("content");
+        const titleError = document.getElementById("titleError");
+        const contentError = document.getElementById("contentError");
+
+        let valid = true;
+        titleError.style.display = "none";
+        contentError.style.display = "none";
+
+        if (title.value.trim() === "") {
+            titleError.style.display = "block";
+            valid = false;
+        }
+
+        if (content.value.trim() === "") {
+            contentError.style.display = "block";
+            valid = false;
+        }
+
+        if (!valid) e.preventDefault();
+    });
+</script>
+
+{% endblock %}

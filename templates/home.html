@@ -1,0 +1,233 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --text-dark-navy: #151435;
+        --light-blue: #d7e6fa;
+        --card-bg: #f7f7f7;
+        --border-color: #c0c0c0;
+    }
+
+    .content-box {
+        width: 100%;
+        max-width: 650px; 
+        text-align: center;
+        background-color: #fff; 
+        border: 1px solid var(--text-dark-navy);
+        border-radius: 20px;
+        padding: 40px 35px; 
+        box-shadow: 0 0 20px rgba(21, 20, 53, 0.25);
+    }
+
+    /* Headers */
+    .content-box h2 {
+        color: var(--text-dark-navy);
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .section-header {
+        color: var(--text-dark-navy);
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid var(--text-dark-navy);
+        padding-bottom: 5px;
+        display: inline-block;
+        text-align: left;
+    }
+
+    /*Form and Input Styling*/
+    #noteForm {
+        text-align: left;
+    }
+
+    .form-control, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px; 
+        border: 1px solid var(--border-color);
+        background-color: var(--card-bg); 
+        color: var(--text-dark-navy);
+        outline: none;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-control:focus,
+    textarea:focus {
+        border-color: var(--text-dark-navy);
+        box-shadow: 0 0 5px rgba(21, 20, 53, 0.5);
+    }
+
+    /*Buttons*/
+    .btn {
+        display: inline-block;
+        padding: 10px 18px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    /*Primary Button*/
+    .btn-primary-style {
+        background-color: var(--text-dark-navy);
+        color: #fff;
+    }
+
+    .btn-primary-style:hover {
+        background-color: #2c3e50;
+    }
+
+    .btn-secondary-style {
+        background-color: #a8b0bf;
+        color: var(--text-dark-navy);
+        margin-right: 5px;
+    }
+
+    .btn-secondary-style:hover {
+        background-color: #7b8493;
+        color: #fff;
+    }
+
+    /* Danger Button (Archive/Delete) */
+    .btn-danger-style {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+    .btn-danger-style:hover {
+        background-color: #c0392b;
+    }
+
+    /*Notes List & Card*/
+    .notes-list {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .note-card {
+        background-color: var(--card-bg); 
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        text-align: left;
+        transition: all 0.3s ease;
+    }
+
+    .note-card:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .note-card h5 {
+        color: var(--text-dark-navy);
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .note-card p {
+        color: #333;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+        word-wrap: break-word; 
+    }
+
+    .alert-info {
+        background-color: #e6f0ff;
+        border: 1px solid #a8b0bf;
+        color: var(--text-dark-navy);
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+        .content-box {
+            padding: 30px 25px;
+        }
+    }
+</style>
+
+<h2>Your Notes Dashboard</h2>
+
+<h3 class="section-header">Add New Note</h3>
+<form method="post" action="{{ url_for('main.add_note') }}" id="noteForm">
+    <div class="mb-2">
+        <input class="form-control" id="title" name="title" placeholder="Title" required>
+    </div>
+    <div class="mb-2">
+        <textarea class="form-control" id="content" name="content" placeholder="Content" required></textarea>
+    </div>
+    <button class="btn btn-primary-style" type="submit">Add Note</button>
+</form>
+
+<h3 class="section-header">Notes List</h3>
+<div class="notes-list">
+    {% for note in notes %}
+        <div class="note-card">
+            <h5>{{ note.title }}</h5>
+            <p>{{ note.content }}</p>
+            <a class="btn btn-secondary-style btn-sm edit-btn" href="{{ url_for('main.edit_note', note_id=note.id) }}">Edit</a>
+            <form method="post" action="{{ url_for('main.delete_note', note_id=note.id) }}" style="display:inline-block" class="archive-form">
+                <button class="btn btn-danger-style btn-sm">Archive</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="alert-info">No notes yet. Start by adding one above!</div>
+    {% endfor %}
+</div>
+
+<script>
+    //Validation for Adding Notes
+    document.getElementById("noteForm").addEventListener("submit", function(e) {
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+
+        if (!title || !content) {
+            e.preventDefault();
+            alert("Please fill out both the title and content fields before adding a note.");
+            return;
+        }
+
+        if (title.length > 100) {
+            e.preventDefault();
+            alert("Title cannot exceed 100 characters.");
+            return;
+        }
+
+        if (content.length > 1000) {
+            e.preventDefault();
+            alert("Content cannot exceed 1000 characters.");
+            return;
+        }
+    });
+
+    //Confirmation before Editing
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", function(e) {
+            if (!confirm("Are you sure you want to edit this note?")) e.preventDefault();
+        });
+    });
+
+    //Confirmation before Archiving
+    document.querySelectorAll(".archive-form").forEach(form => {
+        form.addEventListener("submit", function(e) {
+            if (!confirm("Are you sure you want to move this note to archive?")) e.preventDefault();
+        });
+    });
+</script>
+
+{% endblock %}

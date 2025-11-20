@@ -1,0 +1,68 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #cfe0f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h2 {
+  text-align: center;
+  color: #0b0b3b;
+  margin-bottom: 25px;
+}
+
+label {
+  font-weight: 600;
+  color: #0b0b3b;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #999;
+  font-size: 14px;
+}
+
+.address-title {
+  font-weight: 700;
+  margin: 20px 0 10px;
+  color: #0b0b3b;
+}
+
+.register-btn:hover {
+  background-color: #1b1b6a;
+}
+
+.signin-link {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.signin-link a {
+  color: #3333cc;
+  text-decoration: none;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}
+
+

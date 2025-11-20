@@ -1,0 +1,224 @@
+{
+  "Alaminos": {
+    "zip": "4001",
+    "barangays": [
+      "Del Carmen", "Palma", "San Andres", "San Agustin", "San Benito",
+      "San Gregorio", "San Ildefonso", "San Juan", "San Miguel",
+      "San Roque", "Santa Rosa"
+    ]
+  },
+  "Bay": {
+    "zip": "4033",
+    "barangays": [
+      "Bitin", "Calo", "Dila", "Maitim", "Masaya",
+      "Paciano Rizal", "Poblacion", "Puypuy",
+      "San Agustin", "San Antonio", "San Isidro", "Tranca"
+    ]
+  },
+  "Biñan": {
+    "zip": "4024",
+    "barangays": [
+      "Biñan", "Canlalay", "Dela Paz", "Ganado", "Langkiwa", "Loma", "Malaban",
+      "Malamig", "Mampalasan", "Platero", "Poblacion", "San Antonio", "San Francisco",
+      "San Jose", "San Vicente", "Santo Niño", "Soro-Soro", "Sto. Domingo", "Tubigan"
+    ]
+  },
+  "Cabuyao": {
+    "zip": "4025",
+    "barangays": [
+      "Baclaran", "Banay-Banay", "Banlic", "Bigaa", "Butong", "Casile", "Diezmo",
+      "Gulod", "Mamatid", "Marinig", "Niugan", "Pittland", "Pulo", "Sala",
+      "San Isidro", "Barangay Dos", "Barangay Tres", "Barangay Uno"
+    ]
+  },
+  "Calamba": {
+    "zip": "4027",
+    "barangays": [
+      "Bagong Kalsada", "Banadero", "Banlic", "Barandal", "Batino", "Bubuyan",
+      "Burol", "Halang", "Hornalan", "Kay-Anlog", "La Mesa", "Lawa", "Lecheria",
+      "Looc", "Mabato", "Makiling", "Majada Labas", "Mapagong", "Masili",
+      "Mayapa", "Milagrosa", "Paciano Rizal", "Palingon", "Pansol", "Parian",
+      "Prinza", "Punta", "Real", "Saimsim", "San Cristobal", "San Jose",
+      "Sirang Lupa", "Santo Angel", "Sucol", "Turbina", "Ulango", "Uwisan"
+    ]
+  },
+  "Calauan": {
+    "zip": "4012",
+    "barangays": [
+      "Balayhangin", "Bangyas", "Dayap", "Hanggan", "Imok", "Kanluran",
+      "Labuin", "Limao", "Mabacan", "Paliparan", "Perez", "Prinza", "Silangan"
+    ]
+  },
+
+  "Cavinti": {
+    "zip": "4013",
+    "barangays": [
+      "Anglas", "Bangco", "Bukal", "Cansuso", "Duhat", "Inao-Awan", "Kanluran Talaongan",
+      "Layasin", "Mahipon", "Paowin", "Poblacion", "Silangan Talaongan", "Sumucab", "Tibatib", "Udia"
+    ]
+  },
+  "Famy": {
+    "zip": "4021",
+    "barangays": [
+      "Asana", "Bagong Pook", "Balitoc", "Banaba", "Batuhan", "Bulihan", "Caballero",
+      "Calumpang", "Kapatalan", "Llavac", "Mayatba", "Minayutan", "Palina", "Tunhac"
+    ]
+  },
+  "Kalayaan": {
+    "zip": "4015",
+    "barangays": [
+      "Longos", "San Antonio", "San Juan"
+    ]
+  },
+  "Liliw": {
+    "zip": "4004",
+    "barangays": [
+      "Bagong Anyo (Poblacion)", "Bayanihan (Poblacion)", "Bongkol", "Bubukal", "Cabuyew",
+      "Cavinti", "Cueva", "Danlagin", "Dita", "Ibabang Palina", "Ibabang San Roque", "Ilayang Palina",
+      "Ilayang San Roque", "Kanlurang Bukal", "Laguan", "Luquin", "Malabo-Kalantukan",
+      "Masikap (Poblacion)", "Maslun (Poblacion)", "Pag-Asa (Poblacion)", "Poblacion Norte",
+      "Poblacion Sur", "Rizal", "San Isidro", "Silangan Bukal"
+    ]
+  },
+  "Los Baños": {
+    "zip": "4030",
+    "barangays": [
+      "Anos", "Bagong Silang", "Bambang", "Batong Malake", "Baybayin", "Bayog", "Lalakay",
+      "Maahas", "Malinta", "Mayondon", "San Antonio", "Tuntungin-Putho", "Timugan"
+    ]
+  },
+  "Luisiana": {
+    "zip": "4032",
+    "barangays": [
+      "De La Paz", "San Antonio", "San Buenaventura", "San Diego", "San Isidro", "San Jose",
+      "San Juan", "San Luis", "San Pablo", "San Pedro", "San Rafael", "Santo Domingo", "San Salvador"
+    ]
+  },
+
+  "Magdalena": {
+    "zip": "4007",
+    "barangays": [
+      "Alipit", "Baanan", "Balanac", "Bucal", "Bungkol", "Buenavista", "Daniw", "Dingin",
+      "Halayhayin", "Ilog", "Malaking Ambling", "Malinao", "Poblacion", "Sabang", "Salasad",
+      "Tanawan"
+    ]
+  },
+  "Majayjay": {
+    "zip": "4005",
+    "barangays": [
+      "Amonoy", "Bakia", "Balayong", "Banilad", "Banti", "Bitaoy", "Botocan", "Bukal",
+      "Burgos", "Coralao", "Gagalot", "Ibabang Banga", "Ilayang Banga", "Malinao",
+      "May-It", "Munting Kawayan", "Olla", "Panglan", "Pansoy", "Piit", "Rizal",
+      "San Francisco", "San Isidro", "San Miguel", "San Roque", "Santa Catalina", "Suba"
+    ]
+  },
+  "Nagcarlan": {
+    "zip": "4002",
+    "barangays": [
+      "Abo", "Alumbrado", "Balayong", "Balinacon", "Balinacon East", "Buboy", "Buhanginan",
+      "Bunsuran", "Bukal", "Calingasan", "Kanluran Kabubuhayan", "Silangan Kabubuhayan",
+      "Lawaguin", "Malaya", "Manaol", "Maravilla", "Oples", "Poblacion I", "Poblacion II",
+      "Poblacion III", "Sabang", "Sibulan", "Sulsuguin", "Talangan", "Talahib", "Tipacan", "Wakat"
+    ]
+  },
+  "Paete": {
+    "zip": "4016",
+    "barangays": [
+      "Bagumbayan", "Bangkusay", "Barangay I (Poblacion)", "Barangay II (Poblacion)",
+      "Barangay III (Poblacion)", "Barangay IV (Poblacion)", "Barangay V (Poblacion)",
+      "Barangay VI (Poblacion)", "Barangay VII (Poblacion)", "Barangay VIII (Poblacion)",
+      "Barangay IX (Poblacion)", "Barangay X (Poblacion)", "Maytoong"
+    ]
+  },
+  "Pagsanjan": {
+    "zip": "4008",
+    "barangays": [
+      "Anibong", "Biñan", "Cabanbanan", "Calusiche", "Dingin", "Lambac", "Layugan",
+      "Magdapio", "Maulawin", "Pinagsanjan", "Sampaloc", "Sabang"
+    ]
+  },
+  "Pakil": {
+    "zip": "4017",
+    "barangays": [
+      "Baño", "Burgos", "Casinsin", "Casa Real", "Dorado", "Kabulusan", "Matikiw", "Rizal",
+      "Saray", "Tavera", "Taft", "Banilan"
+    ]
+  },
+
+  "Pangil": {
+    "zip": "4018",
+    "barangays": [
+      "Balian", "Dambo", "Galalan", "Isla", "Natividad", "San Jose", "Sulib"
+    ]
+  },
+  "Pila": {
+    "zip": "4010",
+    "barangays": [
+      "Aplaya", "Bagong Pook", "Concepcion", "Labuin", "Linga", "Masico", "Mojon",
+      "Pansol", "Poblacion", "San Antonio", "San Miguel", "Santa Clara", "Tubuan"
+    ]
+  },
+  "Rizal": {
+    "zip": "4003",
+    "barangays": [
+      "Antipolo", "Entablado", "Pauli 1", "Pauli 2", "East Poblacion", "West Poblacion",
+      "Pook", "Puyon", "Tala", "Tuy"
+    ]
+  },
+  "San Pedro": {
+    "zip": "4023",
+    "barangays": [
+      "Bagong Silang", "Calendola", "Chrysanthemum", "Cuyab", "Estrella", "Fatima",
+      "G.S.I.S.", "Landayan", "Langgam", "Laram", "Magsaysay", "Narra", "Nueva",
+      "Pacita 1", "Pacita 2", "Poblacion", "Riverside", "Rosario", "San Antonio",
+      "San Lorenzo Ruiz", "San Roque", "Santo Niño", "Santo Rosario", "Santo Tomas",
+      "United Bayanihan"
+    ]
+  },
+  "San Pablo": {
+    "zip": "4000",
+    "barangays": [
+      "Atisan", "Bagong Bayan I-A", "Bagong Bayan I-B", "Bagong Pook VI-D", "Bautista",
+      "Concepcion", "Del Remedio", "Dolores", "Ibaba del Sur", "Ilag", "San Antonio 1",
+      "San Antonio 2", "San Bartolome", "San Buenaventura", "San Crispin", "San Cristobal",
+      "San Diego", "San Francisco", "San Gabriel", "San Gregorio", "San Ignacio",
+      "San Isidro", "San Joaquin", "San Jose", "San Juan", "San Lorenzo", "San Lucas 1",
+      "San Lucas 2", "San Marcos", "San Mateo", "San Miguel", "San Nicolas", "San Pedro",
+      "San Rafael", "San Roque", "San Vicente", "Santa Ana", "Santa Catalina", "Santa Cruz",
+      "Santa Elena", "Santa Filomena", "Santa Isabel", "Santa Maria", "Santa Monica",
+      "Santa Veronica", "Santiago I", "Santiago II", "Santo Angel", "Soledad", "Sulong"
+    ]
+  },
+  "Santa Cruz": {
+    "zip": "4009",
+    "barangays": [
+      "Alipit", "Bagumbayan", "Bubukal", "Calios", "Duhat", "Gatid", "Jasaan", "Labuin",
+      "Malinao", "Oogong", "Pagsawitan", "Palasan", "Patimbao", "Poblacion I", "Poblacion II",
+      "San Jose", "San Juan", "San Pablo Norte", "San Pablo Sur", "Santisimo Rosario"
+    ]
+  },
+  "Santa Maria": {
+    "zip": "4022",
+    "barangays": [
+      "Adia", "Bagong Pook", "Barangay I (Poblacion)", "Barangay II (Poblacion)",
+      "Barangay III (Poblacion)", "Barangay IV (Poblacion)", "Cueva", "Inayapan",
+      "Jose Rizal", "Juan Santiago", "Kayhacat", "Macasipac", "Masinao", "Matalinting",
+      "Pao-o", "Sto. Tomas", "Tabi", "West"
+    ]
+  },
+  "Siniloan": {
+    "zip": "4019",
+    "barangays": [
+      "Acevida", "Bagumbarangay (Poblacion)", "Bagong Pag-Asa", "Bagong Silang",
+      "G. Redor", "Gen. Luna", "Halayhayin", "Kapatalan", "Liyang", "Macatad",
+      "Magsaysay", "Mayatba", "Pandeno", "Salubungan", "Wawa"
+    ]
+  },
+  "Victoria": {
+    "zip": "4011",
+    "barangays": [
+      "Antipolo", "Banca-banca", "Daniw", "Masapang", "Nanhaya (Poblacion)", "Pagalangan",
+      "San Benito", "San Felix", "San Francisco", "San Roque"
+    ]
+  }
+}

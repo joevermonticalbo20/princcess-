@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "first_name": "Princess Anne ",
+      "middle_name": "",
+      "last_name": "Principe",
+      "date_of_birth": "2005-08-07",
+      "age": "20",
+      "city_municipality": "Santa Cruz",
+      "barangay": "San Pablo Sur",
+      "zip_code": "4009",
+      "email": "prncssxprncp@gmail.com",
+      "contact_number": "09634350273",
+      "username": "inchennnn",
+      "password_hash": "scrypt:32768:8:1$hQAXJHcxFIUD5Y4a$5cb0b0f1bb6e84e4ed1fc5a218fde92ea8ff433aa7597ce6aee03c737494386fb4d5b4bb264a685b01d2c8ae7c77c88b8f2c2af9c5fb38b8b3f5df1924742612"
+    },
+    {
+      "first_name": "Princess Anne ",
+      "middle_name": "",
+      "last_name": "Principe",
+      "date_of_birth": "2005-08-07",
+      "age": "20",
+      "city_municipality": "Santa Cruz",
+      "barangay": "San Pablo Sur",
+      "zip_code": "4009",
+      "email": "prncssxprncp@gmail.com",
+      "contact_number": "09634350273",
+      "username": "extrachase",
+      "password_hash": "scrypt:32768:8:1$fvnJvfhoZr4c5mos$2be4fce144eb5e4ac91f43f1b1e0a7dabe7f0a00719b9d599a38d5970e6d806aa0012830afc7ecdc51828ab99377c1667a9c8bf27563933eb919793d484983b9",
+      "contact": "09632925602",
+      "address": "san antonio, Luisiana, Laguna, 4302"
+    },
+    {
+      "first_name": "Princess Anne ",
+      "middle_name": "",
+      "last_name": "Principe",
+      "dob": "2005-08-07",
+      "age": 20,
+      "contact": "09634350273",
+      "address": "San Pablo Sur, Santa Cruz, Laguna, 4009",
+      "username": "yoweatsjoji",
+      "email": "liltaku@gmail.com",
+      "password_hash": "scrypt:32768:8:1$XLfViY3j2Sqfrnpt$9aaf4378b929292cc1d35782c3808ab804448652a6e92174eb8354a95cff5c376835f01e4ecdcbe8c45b405c635f723b44a5438b093c8b697cc7475bc12a4413"
+    },
+    {
+      "first_name": "Taku",
+      "middle_name": "",
+      "last_name": "Morisaki",
+      "dob": "1990-01-10",
+      "age": 35,
+      "contact": "09933827751",
+      "address": "Gatid, Santa Cruz, Laguna, 4009",
+      "username": "taku",
+      "email": "liltaku@gmail.com",
+      "password_hash": "scrypt:32768:8:1$Z3PsXWlveos3vcgE$76fd5bef257af01e162e3bae29a2f4549e01a8aed3da24dca3d6b0710af7be52ba41213ee5f7bb34459a7d4951259f65608f84ed7d60f4bf852809ccef16e5c4"
+    }
+  ]
+}

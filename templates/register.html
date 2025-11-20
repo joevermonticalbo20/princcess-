@@ -1,0 +1,847 @@
+    {% extends 'layout.html' %}
+
+    {% block content %}
+    <style>
+        body, html {
+            background-color: #d7e6fa !important; 
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+        }
+
+        .register-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .register-box {
+            background-color: #d7e6fa; 
+            width: 100%;
+            max-width: 650px; 
+            margin: 20px auto; 
+            padding: 30px; 
+            border-radius: 15px; 
+            border: 1px solid #151435; 
+            box-shadow: 0 0 15px rgba(21, 20, 53, 0.2);
+            color: #151435; 
+        }
+
+        /* Titles */
+        .register-box h2 {
+            color: #151435; 
+            text-align: center;
+            margin-bottom: 25px; 
+            font-weight: 700;
+            font-size: 2rem; 
+        }
+
+        .section-title {
+            color: #2c3e50; 
+            font-weight: 600;
+            margin-top: 15px; 
+            margin-bottom: 10px; 
+            padding-bottom: 5px;
+            border-bottom: 1px solid #a4b4c7; 
+            font-size: 1.1rem;
+        }
+
+        /* Form Groups*/
+        .form-group {
+            display: flex;
+            gap: 15px; 
+            margin-bottom: 10px; 
+        }
+
+        .triple-group > *, .double-group > * {
+            flex: 1; 
+            min-width: 0; 
+        }
+
+        .full-width-group > * {
+            width: 100%;
+        }
+
+        .input-label-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5px; 
+        }
+
+        .input-label-group label {
+            font-weight: 500;
+            margin-bottom: 3px; 
+            color: #151435; 
+            font-size: 0.95rem;
+        }
+
+        /* Input Fields */
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 8px 12px; 
+            border: 1px solid #151435; 
+            border-radius: 6px; 
+            background-color: #ffffff; 
+            color: #151435;
+            font-size: 0.95rem; 
+            height: 38px; 
+            box-sizing: border-box; 
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #2c3e50;
+            box-shadow: 0 0 5px rgba(21, 20, 53, 0.2);
+            outline: none;
+        }
+        
+        .input-group select:disabled {
+            background-color: #e9ecef;
+        }
+        
+        /* Validation Error Styling */
+        .validation-error {
+            color: #d9534f; 
+            font-size: 0.8rem; 
+            margin-top: 3px;
+            min-height: 1.2em;
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #151435;
+        }
+
+        .password-requirements small {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.85rem;
+        }
+
+        .req {
+            color: #6c757d;
+        }
+
+        .req.valid {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .req.invalid {
+            color: #dc3545;
+        }
+
+        #password-strength.weak {
+            color: #dc3545;
+        }
+
+        #password-strength.medium {
+            color: #fd7e14;
+        }
+
+        #password-strength.strong {
+            color: #28a745;
+        }
+
+        /* Register Button */
+        .register-btn {
+            width: 100%;
+            padding: 10px; 
+            margin-top: 25px; 
+            background-color: #151435; 
+            color: #d7e6fa; 
+            border: none;
+            border-radius: 20px; 
+            font-size: 1rem; 
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(21, 20, 53, 0.2);
+        }
+
+        .register-btn:hover {
+            background-color: #2c3e50; 
+            transform: translateY(-1px);
+        }
+
+        /* Sign In Link */
+        .signin-link {
+            text-align: center;
+            margin-top: 15px; 
+            font-size: 0.95rem;
+            color: #151435;
+        }
+
+        .signin-link a {
+            color: #151435; 
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .signin-link a:hover {
+            color: #2c3e50;
+            text-decoration: underline;
+        }
+        
+        /* Media Query for responsiveness */
+        @media (max-width: 680px) {
+            .register-box {
+                padding: 20px 15px;
+                margin: 10px auto;
+                max-width: 95%;
+            }
+            .form-group {
+                flex-direction: column;
+                gap: 0;
+            }
+            .input-label-group {
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* Password Toggle Button Overrides */
+        .input-group.password-group {
+            position: relative; 
+        }
+        
+        .input-group.password-group input {
+            padding-right: 70px !important; 
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 5px; 
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: #151435; 
+            color: #d7e6fa; 
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px; 
+            font-size: 12px; 
+            height: auto; 
+            line-height: 1.5; 
+            border-radius: 6px; 
+            transition: background 0.3s;
+        }
+
+        .toggle-password:hover {
+            background: #2c3e50; 
+        }
+    </style>
+
+    <div class="register-container">
+        <div class="register-box">
+            <h2>Create an Account</h2>
+
+            <form id="registerForm" method="POST">
+                
+                <h3 class="section-title">Full Name</h3>
+                <div class="form-group triple-group">
+                    <div class="input-label-group">
+                        <label for="first-name">First Name</label>
+                        <div class="input-group">
+                            <input type="text" id="first-name" name="first_name" placeholder="First Name" 
+                                    pattern="[A-Za-z\s]{3,30}" title="3-30 letters and single spaces only." required 
+                                    value="{{ form_data.first_name if form_data else '' }}">
+                        </div>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="middle-name">Middle Name (Optional)</label>
+                        <div class="input-group">
+                            <input type="text" id="middle-name" name="middle_name" placeholder="Middle Name (Optional)" 
+                                    pattern="[A-Za-z\s]{0,30}" title="Letters and single spaces only, max 30 characters." 
+                                    value="{{ form_data.middle_name if form_data else '' }}">
+                        </div>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="last-name">Last Name</label>
+                        <div class="input-group">
+                            <input type="text" id="last-name" name="last_name" placeholder="Last Name" 
+                                    pattern="[A-Za-z\s]{3,30}" title="3-30 letters and single spaces only." required 
+                                    value="{{ form_data.last_name if form_data else '' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group double-group">
+                    <div class="input-label-group">
+                        <label for="dob">Date of Birth</label>
+                        <div class="input-group">
+                            <input type="date" id="dob" name="date_of_birth" placeholder="yyyy-mm-dd" required value="{{ form_data.date_of_birth if form_data else '' }}">
+                        </div>
+                        <small id="dob-error" class="validation-error"></small>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="age">Age</label>
+                        <div class="input-group">
+                            <input type="number" id="age" name="age" placeholder="Age" readonly required value="{{ form_data.age if form_data else '' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Address (Laguna)</h3>
+                <div class="form-group triple-group">
+                    <div class="input-label-group">
+                        <label for="city">City/Municipality</label>
+                        <div class="input-group">
+                            <select id="city" name="city_municipality" required>
+                                <option value="" disabled {% if not form_data or not form_data.city_municipality %}selected{% endif %}>Select City/Municipality</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="barangay">Barangay</label>
+                        <div class="input-group">
+                            <select id="barangay" name="barangay" required disabled>
+                                <option value="" disabled {% if not form_data or not form_data.barangay %}selected{% endif %}>Select Barangay</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="zip-code">Zip Code</label>
+                        <div class="input-group">
+                            <input type="text" id="zip-code" name="zip_code" placeholder="Zip Code" readonly required value="{{ form_data.zip_code if form_data else '' }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group double-group">
+                    <div class="input-label-group">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <input type="email" id="email" name="email" placeholder="e.g. user@gmail.com, user@yahoo.com, user@company.com" 
+                                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+                                    title="Please enter a complete email address with proper domain (e.g., user@gmail.com not user@gmail.cm)" required 
+                                    value="{{ form_data.email if form_data else '' }}">
+                        </div>
+                        <small id="email-error" class="validation-error"></small>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="contact-number">Contact Number</label>
+                        <div class="input-group">
+                            <input type="tel" id="contact-number" name="contact_number" placeholder="e.g. 09xxxxxxxxx" 
+                                    pattern="^(09\d{9}|\+639\d{9})$" 
+                                    title="Must be an 11-digit mobile number (09xxxxxxxxx) or +639 format." required 
+                                    value="{{ form_data.contact_number if form_data else '' }}">
+                        </div>
+                        <small id="contact-error" class="validation-error"></small>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width-group">
+                    <div class="input-label-group full-width">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <input type="text" id="username" name="username" placeholder="Username" 
+                                    pattern="^(?=.*[a-zA-Z])[a-zA-Z0-9_]{4,15}$" 
+                                    title="4-15 characters. Must contain letters. Can include numbers (max 4) and underscore." required 
+                                    value="{{ form_data.username if form_data else '' }}">
+                        </div>
+                        <small id="username-error" class="validation-error"></small>
+                    </div>
+                </div>
+
+                <div class="form-group double-group">
+                    <div class="input-label-group">
+                        <label for="password">Password</label>
+                        <div class="input-group password-group">
+                            <input type="password" id="password" name="password" placeholder="Password" 
+                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{}|;:,.<>?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{}|;:,.<>?]{8,}$" 
+                                    title="Must be at least 8 characters with uppercase, lowercase, number, and special character. Only letters, numbers, and special characters allowed." required>
+                            <button type="button" class="toggle-password" data-target="password">Show</button>
+                        </div>
+                        <small id="password-strength" class="validation-error"></small>
+                    </div>
+                    <div class="input-label-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="input-group password-group">
+                            <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+                            <button type="button" class="toggle-password" data-target="confirm-password">Show</button>
+                        </div>
+                        <small id="password-match-error" class="validation-error"></small>
+                    </div>
+                </div>
+
+                <button type="submit" class="register-btn">Register</button>
+            </form>
+
+            <div class="signin-link">
+                Already have an account? <a href="{{ url_for('auth.login') }}">Sign in here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. DATA FOR ADDRESS LOOKUP (Laguna Municipalities/Cities)
+        const lagunaData = {
+            "Alaminos": { "zip": "4001", "barangays": ["Del Carmen", "Palma", "San Andres", "San Agustin", "San Benito", "San Gregorio", "San Ildefonso", "San Juan", "San Miguel", "San Roque", "Santa Rosa"] },
+            "Bay": { "zip": "4033", "barangays": ["Bitin", "Calo", "Dila", "Maitim", "Masaya", "Paciano Rizal", "Poblacion", "Puypuy", "San Agustin", "San Antonio", "San Isidro", "Tranca"] },
+            "Biñan": { "zip": "4024", "barangays": ["Biñan", "Canlalay", "Dela Paz", "Ganado", "Langkiwa", "Loma", "Malaban", "Malamig", "Mampalasan", "Platero", "Poblacion", "San Antonio", "San Francisco", "San Jose", "San Vicente", "Santo Niño", "Soro-Soro", "Sto. Domingo", "Tubigan"] },
+            "Cabuyao": { "zip": "4025", "barangays": ["Baclaran", "Banay-Banay", "Banlic", "Bigaa", "Butong", "Casile", "Diezmo", "Gulod", "Mamatid", "Marinig", "Niugan", "Pittland", "Pulo", "Sala", "San Isidro", "Barangay Dos", "Barangay Tres", "Barangay Uno"] },
+            "Calamba": { "zip": "4027", "barangays": ["Bagong Kalsada", "Banadero", "Banlic", "Barandal", "Batino", "Bubuyan", "Burol", "Halang", "Hornalan", "Kay-Anlog", "La Mesa", "Lawa", "Lecheria", "Looc", "Mabato", "Makiling", "Majada Labas", "Mapagong", "Masili", "Mayapa", "Milagrosa", "Paciano Rizal", "Palingon", "Pansol", "Parian", "Prinza", "Punta", "Real", "Saimsim", "San Cristobal", "San Jose", "Sirang Lupa", "Santo Angel", "Sucol", "Turbina", "Ulango", "Uwisan"] },
+            "Calauan": { "zip": "4012", "barangays": ["Balayhangin", "Bangyas", "Dayap", "Hanggan", "Imok", "Kanluran", "Labuin", "Limao", "Mabacan", "Paliparan", "Perez", "Prinza", "Silangan"] },
+            "Cavinti": { "zip": "4013", "barangays": ["Anglas", "Bangco", "Bukal", "Cansuso", "Duhat", "Inao-Awan", "Kanluran Talaongan", "Layasin", "Mahipon", "Paowin", "Poblacion", "Silangan Talaongan", "Sumucab", "Tibatib", "Udia"] },
+            "Famy": { "zip": "4021", "barangays": ["Asana", "Bagong Pook", "Balitoc", "Banaba", "Batuhan", "Bulihan", "Caballero", "Calumpang", "Kapatalan", "Llavac", "Mayatba", "Minayutan", "Palina", "Tunhac"] },
+            "Kalayaan": { "zip": "4015", "barangays": ["Longos", "San Antonio", "San Juan"] },
+            "Liliw": { "zip": "4004", "barangays": ["Bagong Anyo (Poblacion)", "Bayanihan (Poblacion)", "Bongkol", "Bubukal", "Cabuyew", "Cavinti", "Cueva", "Danlagin", "Dita", "Ibabang Palina", "Ibabang San Roque", "Ilayang Palina", "Ilayang San Roque", "Kanlurang Bukal", "Laguan", "Luquin", "Malabo-Kalantukan", "Masikap (Poblacion)", "Maslun (Poblacion)", "Pag-Asa (Poblacion)", "Poblacion Norte", "Poblacion Sur", "Rizal", "San Isidro", "Silangan Bukal"] },
+            "Los Baños": { "zip": "4030", "barangays": ["Anos", "Bagong Silang", "Bambang", "Batong Malake", "Baybayin", "Bayog", "Lalakay", "Maahas", "Malinta", "Mayondon", "San Antonio", "Tuntungin-Putho", "Timugan"] },
+            "Luisiana": { "zip": "4032", "barangays": ["De La Paz", "San Antonio", "San Buenaventura", "San Diego", "San Isidro", "San Jose", "San Juan", "San Luis", "San Pablo", "San Pedro", "San Rafael", "Santo Domingo", "San Salvador"] },
+            "Magdalena": { "zip": "4007", "barangays": ["Alipit", "Baanan", "Balanac", "Bucal", "Bungkol", "Buenavista", "Daniw", "Dingin", "Halayhayin", "Ilog", "Malaking Ambling", "Malinao", "Poblacion", "Sabang", "Salasad", "Tanawan"] },
+            "Majayjay": { "zip": "4005", "barangays": ["Amonoy", "Bakia", "Balayong", "Banilad", "Banti", "Bitaoy", "Botocan", "Bukal", "Burgos", "Coralao", "Gagalot", "Ibabang Banga", "Ilayang Banga", "Malinao", "May-It", "Munting Kawayan", "Olla", "Panglan", "Pansoy", "Piit", "Rizal", "San Francisco", "San Isidro", "San Miguel", "San Roque", "Santa Catalina", "Suba"] },
+            "Nagcarlan": { "zip": "4002", "barangays": ["Abo", "Alumbrado", "Balayong", "Balinacon", "Balinacon East", "Buboy", "Buhanginan", "Bunsuran", "Bukal", "Calingasan", "Kanluran Kabubuhayan", "Silangan Kabubuhayan", "Lawaguin", "Malaya", "Manaol", "Maravilla", "Oples", "Poblacion I", "Poblacion II", "Poblacion III", "Sabang", "Sibulan", "Sulsuguin", "Talangan", "Talahib", "Tipacan", "Wakat"] },
+            "Paete": { "zip": "4016", "barangays": ["Bagumbayan", "Bangkusay", "Barangay I (Poblacion)", "Barangay II (Poblacion)", "Barangay III (Poblacion)", "Barangay IV (Poblacion)", "Barangay V (Poblacion)", "Barangay VI (Poblacion)", "Barangay VII (Poblacion)", "Barangay VIII (Poblacion)", "Barangay IX (Poblacion)", "Barangay X (Poblacion)", "Maytoong"] },
+            "Pagsanjan": { "zip": "4008", "barangays": ["Anibong", "Biñan", "Cabanbanan", "Calusiche", "Dingin", "Lambac", "Layugan", "Magdapio", "Maulawin", "Pinagsanjan", "Sampaloc", "Sabang"] },
+            "Pakil": { "zip": "4017", "barangays": ["Baño", "Burgos", "Casinsin", "Casa Real", "Dorado", "Kabulusan", "Matikiw", "Rizal", "Saray", "Tavera", "Taft", "Banilan"] },
+            "Pangil": { "zip": "4018", "barangays": ["Balian", "Dambo", "Galalan", "Isla", "Natividad", "San Jose", "Sulib"] },
+            "Pila": { "zip": "4010", "barangays": ["Aplaya", "Bagong Pook", "Concepcion", "Labuin", "Linga", "Masico", "Mojon", "Pansol", "Poblacion", "San Antonio", "San Miguel", "Santa Clara", "Tubuan"] },
+            "Rizal": { "zip": "4003", "barangays": ["Antipolo", "Entablado", "Pauli 1", "Pauli 2", "East Poblacion", "West Poblacion", "Pook", "Puyon", "Tala", "Tuy"] },
+            "San Pedro": { "zip": "4023", "barangays": ["Bagong Silang", "Calendola", "Chrysanthemum", "Cuyab", "Estrella", "Fatima", "G.S.I.S.", "Landayan", "Langgam", "Laram", "Magsaysay", "Narra", "Nueva", "Pacita 1", "Pacita 2", "Poblacion", "Riverside", "Rosario", "San Antonio", "San Lorenzo Ruiz", "San Roque", "Santo Niño", "Santo Rosario", "Santo Tomas", "United Bayanihan"] },
+            "San Pablo": { "zip": "4000", "barangays": ["Atisan", "Bagong Bayan I-A", "Bagong Bayan I-B", "Bagong Pook VI-D", "Bautista", "Concepcion", "Del Remedio", "Dolores", "Ibaba del Sur", "Ilag", "San Antonio 1", "San Antonio 2", "San Bartolome", "San Buenaventura", "San Crispin", "San Cristobal", "San Diego", "San Francisco", "San Gabriel", "San Gregorio", "San Ignacio", "San Isidro", "San Joaquin", "San Jose", "San Juan", "San Lorenzo", "San Lucas 1", "San Lucas 2", "San Marcos", "San Mateo", "San Miguel", "San Nicolas", "San Pedro", "San Rafael", "San Roque", "San Vicente", "Santa Ana", "Santa Catalina", "Santa Cruz", "Santa Elena", "Santa Filomena", "Santa Isabel", "Santa Maria", "Santa Monica", "Santa Veronica", "Santiago I", "Santiago II", "Santo Angel", "Soledad", "Sulong"] },
+            "Santa Cruz": { "zip": "4009", "barangays": ["Alipit", "Bagumbayan", "Bubukal", "Calios", "Duhat", "Gatid", "Jasaan", "Labuin", "Malinao", "Oogong", "Pagsawitan", "Palasan", "Patimbao", "Poblacion I", "Poblacion II", "San Jose", "San Juan", "San Pablo Norte", "San Pablo Sur", "Santisimo Rosario"] },
+            "Santa Maria": { "zip": "4022", "barangays": ["Adia", "Bagong Pook", "Barangay I (Poblacion)", "Barangay II (Poblacion)", "Barangay III (Poblacion)", "Barangay IV (Poblacion)", "Cueva", "Inayapan", "Jose Rizal", "Juan Santiago", "Kayhacat", "Macasipac", "Masinao", "Matalinting", "Pao-o", "Sto. Tomas", "Tabi", "West"] },
+            "Siniloan": { "zip": "4019", "barangays": ["Acevida", "Bagumbarangay (Poblacion)", "Bagong Pag-Asa", "Bagong Silang", "G. Redor", "Gen. Luna", "Halayhayin", "Kapatalan", "Liyang", "Macatad", "Magsaysay", "Mayatba", "Pandeno", "Salubungan", "Wawa"] },
+            "Victoria": { "zip": "4011", "barangays": ["Antipolo", "Banca-banca", "Daniw", "Masapang", "Nanhaya (Poblacion)", "Pagalangan", "San Benito", "San Felix", "San Francisco", "San Roque"] }
+        };
+
+        // 2. DOM ELEMENTS AND INITIAL SETUP
+        const form = document.getElementById('registerForm');
+        const citySelect = document.getElementById('city');
+        const barangaySelect = document.getElementById('barangay');
+        const zipCodeInput = document.getElementById('zip-code');
+        const dobInput = document.getElementById('dob');
+        const ageInput = document.getElementById('age');
+        const firstNameInput = document.getElementById('first-name');
+        const middleNameInput = document.getElementById('middle-name');
+        const lastNameInput = document.getElementById('last-name');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const passMatchError = document.getElementById('password-match-error');
+        const dobError = document.getElementById('dob-error');
+        const contactNumberInput = document.getElementById('contact-number');
+        const contactError = document.getElementById('contact-error');
+        const usernameInput = document.getElementById('username');
+        const usernameError = document.getElementById('username-error');
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('email-error');
+
+        function populateCities() {
+            const cityNames = Object.keys(lagunaData).sort();
+            const selectedCity = citySelect.dataset.selected || '{{ form_data.city_municipality if form_data else "" }}'; 
+            
+            cityNames.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                if (city === selectedCity) {
+                    option.selected = true;
+                }
+                citySelect.appendChild(option);
+            });
+            if (selectedCity) {
+                handleCityChange(true);
+            }
+        }
+        
+        function handleCityChange(isInitialLoad = false) {
+            const selectedCity = citySelect.value;
+            const cityData = lagunaData[selectedCity];
+            const selectedBarangay = barangaySelect.dataset.selected || '{{ form_data.barangay if form_data else "" }}'; 
+
+            zipCodeInput.value = cityData ? cityData.zip : '';
+
+            barangaySelect.innerHTML = '<option value="" disabled selected>Select Barangay</option>';
+            if (cityData) {
+                cityData.barangays.sort().forEach(barangay => {
+                    const option = document.createElement('option');
+                    option.value = barangay;
+                    option.textContent = barangay;
+                    if (isInitialLoad && barangay === selectedBarangay) {
+                        option.selected = true;
+                        barangaySelect.querySelector('option[disabled][value=""]').selected = false;
+                    }
+                    barangaySelect.appendChild(option);
+                });
+                barangaySelect.disabled = false;
+            } else {
+                barangaySelect.disabled = true;
+            }
+            
+            if (selectedCity && !selectedBarangay) {
+                barangaySelect.querySelector('option[disabled][value=""]').selected = true;
+            }
+        }
+
+        // A. Name Formatting & Validation
+        function capitalizeAndValidateName(event) {
+            let input = event.target;
+            let value = input.value;
+            
+            // Capitalize first letter of each word
+            value = value.toLowerCase().replace(/(^|\s)\S/g, function(firstLetter) {
+                return firstLetter.toUpperCase();
+            });
+            
+            // Ensure no double spaces
+            value = value.replace(/\s\s+/g, ' '); 
+            
+            input.value = value;
+        }
+        
+        // B. Age Calculation and Validation
+        function calculateAge() {
+            const dobValue = dobInput.value;
+            if (!dobValue) { ageInput.value = ''; dobError.textContent = ''; return; }
+            const birthDate = new Date(dobValue);
+            const today = new Date();
+            if (birthDate > today) { dobError.textContent = 'Birthdate cannot be in the future.'; ageInput.value = ''; return; }
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
+            if (age < 18 || age > 100) {
+                ageInput.value = ''; dobError.textContent = 'Must be between 18 and 100 years old to register.';
+                dobInput.setCustomValidity("Invalid age range.");
+            } else {
+                ageInput.value = age; dobError.textContent = ''; dobInput.setCustomValidity("");
+            }
+        }
+
+        // C. Enhanced Email Validation
+        function validateEmailDisplay() {
+            const email = emailInput.value.trim().toLowerCase();
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            
+            if (email === '') {
+                emailError.textContent = '';
+                emailInput.setCustomValidity("");
+                return;
+            }
+            
+            // Basic pattern check
+            if (!emailPattern.test(email)) {
+                emailError.textContent = 'Please enter a valid email address format (e.g., user@gmail.com)';
+                emailInput.setCustomValidity("Invalid email format");
+                return;
+            }
+            
+            // Extract domain for additional validation
+            const domain = email.split('@')[1];
+            const tld = domain.split('.').pop();
+            
+            // Check for incomplete domains
+            const incompleteDomains = [
+                /\.c$/,      // .c
+                /\.co$/,     // .co
+                /\.cm$/,     // .cm  
+                /\.om$/,     // .om
+                /\.gmail$/,  // .gmail (no TLD)
+                /\.yahoo$/,  // .yahoo (no TLD)
+                /\.hotmail$/, // .hotmail (no TLD)
+                /\s/         // contains spaces
+            ];
+            
+            for (const pattern of incompleteDomains) {
+                if (pattern.test(domain)) {
+                    emailError.textContent = 'Please enter a complete domain (e.g., gmail.com not gmail.cm)';
+                    emailInput.setCustomValidity("Incomplete domain");
+                    return;
+                }
+            }
+            
+            // Check TLD length
+            if (tld.length < 2) {
+                emailError.textContent = 'Please check your domain extension (e.g., .com, .ph, .org)';
+                emailInput.setCustomValidity("Invalid TLD");
+                return;
+            }
+            
+            // Valid email
+            emailError.textContent = '';
+            emailInput.setCustomValidity("");
+        }
+
+        // D. Contact Number Validation
+        function validateContactNumber() {
+            const number = contactNumberInput.value.replace(/[^0-9+]/g, '');
+            
+            if (!contactNumberInput.checkValidity()) {
+                contactError.textContent = 'Must be an 11-digit mobile number (09xxxxxxxxx) or +639 format.';
+                contactNumberInput.setCustomValidity("Invalid format");
+                return;
+            }
+            
+            const repetitivePattern = /(\d)\1{7}/;
+            const digits = number.startsWith('09') ? number.substring(2) : 
+                        (number.startsWith('+639') ? number.substring(4) : number);
+            
+            if (repetitivePattern.test(digits)) {
+                contactError.textContent = 'Invalid number. Avoid overly repetitive digits.';
+                contactNumberInput.setCustomValidity("Overly repetitive digits");
+            } else {
+                contactError.textContent = '';
+                contactNumberInput.setCustomValidity("");
+            }
+        }
+
+        // E. Username validation
+        function validateUsername() {
+            const value = usernameInput.value;
+            const numberCount = (value.match(/[0-9]/g) || []).length;
+            if (value === '') { usernameError.textContent = ''; usernameInput.setCustomValidity(""); return; }
+            if (numberCount > 4) {
+                usernameError.textContent = 'Username can contain a maximum of 4 numbers.'; usernameInput.setCustomValidity("Too many numbers in username.");
+            } else if (!usernameInput.checkValidity()) {
+                usernameError.textContent = usernameInput.title;
+            } else { usernameError.textContent = ''; usernameInput.setCustomValidity("");
+            }
+        }
+
+        // F. Password Strength Validation
+        function checkPasswordStrength(password) {
+            const validChars = /^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{}|;:,.<>?]+$/;
+            if (!validChars.test(password)) {
+                return {
+                    requirements: {
+                        validChars: false,
+                        length: false,
+                        upper: false,
+                        lower: false,
+                        number: false,
+                        special: false
+                    },
+                    strength: 'invalid',
+                    message: 'Password contains invalid characters (only letters, numbers, and special characters allowed)'
+                };
+            }
+
+            const requirements = {
+                validChars: true,
+                length: password.length >= 8,
+                upper: /[A-Z]/.test(password),
+                lower: /[a-z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(password)
+            };
+
+            const metCount = Object.values(requirements).filter(Boolean).length;
+            let strength = 'weak';
+            let message = 'Password is weak';
+
+            if (metCount === 6) {
+                strength = 'strong';
+                message = 'Strong password!';
+            } else if (metCount >= 4) {
+                strength = 'medium';
+                message = 'Password could be stronger';
+            }
+
+            return { requirements, strength, message };
+        }
+
+        function updatePasswordRequirements(requirements) {
+            document.getElementById('valid-chars-req').className = requirements.validChars ? 'req valid' : 'req invalid';
+            document.getElementById('length-req').className = requirements.length ? 'req valid' : 'req invalid';
+            document.getElementById('upper-req').className = requirements.upper ? 'req valid' : 'req invalid';
+            document.getElementById('lower-req').className = requirements.lower ? 'req valid' : 'req invalid';
+            document.getElementById('number-req').className = requirements.number ? 'req valid' : 'req invalid';
+            document.getElementById('special-req').className = requirements.special ? 'req valid' : 'req invalid';
+        }
+
+        function validatePasswordStrength() {
+            const password = passwordInput.value;
+            const strengthElement = document.getElementById('password-strength');
+            
+            if (password === '') {
+                strengthElement.textContent = '';
+                strengthElement.className = 'validation-error';
+                return false;
+            }
+
+            const { requirements, strength, message } = checkPasswordStrength(password);
+            updatePasswordRequirements(requirements);
+            
+            strengthElement.textContent = message;
+            strengthElement.className = `validation-error ${strength}`;
+
+            // Update custom validity
+            if (strength === 'strong') {
+                passwordInput.setCustomValidity("");
+                return true;
+            } else {
+                passwordInput.setCustomValidity("Password does not meet strength requirements");
+                return false;
+            }
+        }
+
+        // G. Password Match Validation
+        function checkPasswordMatch() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const matchError = document.getElementById('password-match-error');
+
+            if (confirmPassword === '') {
+                matchError.textContent = '';
+                confirmPasswordInput.setCustomValidity("");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                matchError.textContent = 'Passwords do not match.';
+                confirmPasswordInput.setCustomValidity("Passwords do not match");
+            } else {
+                matchError.textContent = '';
+                confirmPasswordInput.setCustomValidity("");
+            }
+        }
+        
+        // H. Toggle Password Visibility
+        function togglePassword(e) {
+            const button = e.target;
+            const targetId = button.dataset.target;
+            const targetInput = document.getElementById(targetId);
+            if (targetInput.type === 'password') {
+                targetInput.type = 'text'; button.textContent = 'Hide';
+            } else {
+                targetInput.type = 'password'; button.textContent = 'Show';
+            }
+        }
+
+        // I. Server-side duplicate checking
+        async function checkDuplicate(field, value) {
+            try {
+                const response = await fetch('/check-duplicate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ field: field, value: value })
+                });
+                const result = await response.json();
+                return result.exists;
+            } catch (error) {
+                console.error('Error checking duplicate:', error);
+                return false;
+            }
+        }
+
+        async function validateField(field, value, errorElement, inputElement) {
+            if (!value) {
+                errorElement.textContent = '';
+                inputElement.setCustomValidity("");
+                return true;
+            }
+            
+            // First check client-side validation
+            if (!inputElement.checkValidity()) {
+                return false;
+            }
+            
+            // Then check for duplicates on server
+            const exists = await checkDuplicate(field, value);
+            if (exists) {
+                const fieldName = field === 'contact' ? 'Contact number' : field.charAt(0).toUpperCase() + field.slice(1);
+                errorElement.textContent = `${fieldName} already exists.`;
+                inputElement.setCustomValidity(`${fieldName} already exists`);
+                return false;
+            }
+            
+            errorElement.textContent = '';
+            inputElement.setCustomValidity("");
+            return true;
+        }
+
+        // 4. EVENT LISTENERS AND FORM SUBMISSION
+        document.addEventListener('DOMContentLoaded', () => {
+            citySelect.dataset.selected = '{{ form_data.city_municipality if form_data else "" }}';
+            barangaySelect.dataset.selected = '{{ form_data.barangay if form_data else "" }}';
+            
+            populateCities();
+
+            firstNameInput.addEventListener('input', capitalizeAndValidateName);
+            middleNameInput.addEventListener('input', capitalizeAndValidateName);
+            lastNameInput.addEventListener('input', capitalizeAndValidateName);
+
+            dobInput.addEventListener('change', calculateAge);
+            calculateAge(); 
+            
+            citySelect.addEventListener('change', () => handleCityChange(false)); 
+            
+            // Enhanced validation with duplicate checking
+            emailInput.addEventListener('input', validateEmailDisplay);
+            emailInput.addEventListener('blur', async () => {
+                validateEmailDisplay();
+                await validateField('email', emailInput.value.trim().toLowerCase(), emailError, emailInput);
+            });
+            
+            contactNumberInput.addEventListener('input', validateContactNumber);
+            contactNumberInput.addEventListener('blur', async () => {
+                validateContactNumber();
+                await validateField('contact', contactNumberInput.value, contactError, contactNumberInput);
+            });
+            
+            usernameInput.addEventListener('input', validateUsername);
+            usernameInput.addEventListener('blur', async () => {
+                validateUsername();
+                await validateField('username', usernameInput.value, usernameError, usernameInput);
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                validatePasswordStrength();
+                checkPasswordMatch();
+            });
+            
+            confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+            
+            document.querySelectorAll('.toggle-password').forEach(button => {
+                button.addEventListener('click', togglePassword);
+            });
+
+            form.addEventListener('submit', async function(e) {
+                // Re-run all critical checks before final submission
+                calculateAge();
+                const isPasswordStrong = validatePasswordStrength();
+                checkPasswordMatch();
+                validateEmailDisplay();
+                validateContactNumber();
+                validateUsername();
+
+                // Check for duplicates one more time before submission
+                const emailValid = await validateField('email', emailInput.value.trim().toLowerCase(), emailError, emailInput);
+                const usernameValid = await validateField('username', usernameInput.value, usernameError, usernameInput);
+                const contactValid = await validateField('contact', contactNumberInput.value, contactError, contactNumberInput);
+
+                const passwordsMatch = passwordInput.value === confirmPasswordInput.value;
+                
+                if (!form.checkValidity() || !emailValid || !usernameValid || !contactValid || !isPasswordStrong || !passwordsMatch) {
+                    e.preventDefault();
+                    let errorMessage = 'Registration Error: Please correct the following errors:\n';
+                    
+                    if (!emailInput.checkValidity() || emailError.textContent) {
+                        errorMessage += '- Invalid email address\n';
+                    }
+                    if (!contactNumberInput.checkValidity() || contactError.textContent) {
+                        errorMessage += '- Invalid contact number\n';
+                    }
+                    if (!isPasswordStrong) {
+                        errorMessage += '- Password does not meet strength requirements\n';
+                    }
+                    if (!passwordsMatch) {
+                        errorMessage += '- Passwords do not match\n';
+                    }
+                    if (!usernameInput.checkValidity() || usernameError.textContent) {
+                        errorMessage += '- Invalid username\n';
+                    }
+                    
+                    alert(errorMessage);
+                }
+            });
+        });
+    </script>
+    {% endblock %}

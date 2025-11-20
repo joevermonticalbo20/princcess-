@@ -1,0 +1,593 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<style>
+    body, html {
+        background-color: #d7e6fa !important; 
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; 
+    }
+
+    .profile-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+        min-height: 100vh;
+    }
+
+    .profile-box {
+        background-color: #d7e6fa; 
+        width: 100%;
+        max-width: 650px; 
+        margin: 20px auto; 
+        padding: 30px; 
+        border-radius: 15px; 
+        border: 1px solid #151435; 
+        box-shadow: 0 0 15px rgba(21, 20, 53, 0.2);
+        color: #151435; 
+    }
+
+    .profile-box h2 {
+        color: #151435; 
+        text-align: center;
+        margin-bottom: 25px; 
+        font-weight: 700;
+        font-size: 2rem; 
+    }
+
+    .section-title {
+        color: #2c3e50; 
+        font-weight: 600;
+        margin-top: 15px; 
+        margin-bottom: 10px; 
+        padding-bottom: 5px;
+        border-bottom: 1px solid #a4b4c7; 
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        display: flex;
+        gap: 15px; 
+        margin-bottom: 10px; 
+    }
+
+    .triple-group > *, .double-group > * {
+        flex: 1; 
+        min-width: 0; 
+    }
+
+    .full-width-group > * {
+        width: 100%;
+    }
+
+    .input-label-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5px; 
+    }
+
+    .input-label-group label {
+        font-weight: 500;
+        margin-bottom: 3px; 
+        color: #151435; 
+        font-size: 0.95rem;
+    }
+
+    .input-group input, .input-group select {
+        width: 100%;
+        padding: 8px 12px; 
+        border: 1px solid #151435; 
+        border-radius: 6px; 
+        background-color: #ffffff; 
+        color: #151435;
+        font-size: 0.95rem; 
+        height: 38px; 
+        box-sizing: border-box; 
+    }
+
+    .input-group input:focus, .input-group select:focus {
+        border-color: #2c3e50;
+        box-shadow: 0 0 5px rgba(21, 20, 53, 0.2);
+        outline: none;
+    }
+
+    .profile-btn {
+        width: 100%;
+        padding: 12px; 
+        margin-top: 25px; 
+        background-color: #151435; 
+        color: #d7e6fa; 
+        border: none;
+        border-radius: 20px; 
+        font-size: 1rem; 
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 8px rgba(21, 20, 53, 0.2);
+    }
+
+    .profile-btn:hover {
+        background-color: #2c3e50; 
+        transform: translateY(-1px);
+    }
+
+    .profile-btn:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .back-btn {
+        background-color: transparent;
+        color: #151435;
+        border: 1px solid #151435;
+        margin-top: 10px;
+    }
+
+    .back-btn:hover {
+        background-color: #151435;
+        color: #d7e6fa;
+    }
+
+    @media (max-width: 680px) {
+        .profile-box {
+            padding: 20px 15px;
+            margin: 10px auto;
+            max-width: 95%;
+        }
+        .form-group {
+            flex-direction: column;
+            gap: 0;
+        }
+        .input-label-group {
+            margin-bottom: 10px;
+        }
+    }
+
+    /* Alert Styles */
+    .alert {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+    
+    .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="profile-container">
+    <div class="profile-box">
+        <h2>Edit Profile</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form id="profileForm" method="POST" action="{{ url_for('main.edit_profile') }}">
+            <input type="hidden" name="action" id="action" value="">
+            
+            <div class="section-title">Personal Information</div>
+            
+            <div class="form-group triple-group">
+                <div class="input-label-group">
+                    <label>First Name *</label>
+                    <div class="input-group">
+                        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                    </div>
+                </div>
+                <div class="input-label-group">
+                    <label>Middle Name</label>
+                    <div class="input-group">
+                        <input type="text" id="middle_name" name="middle_name" value="{{ user.middle_name or '' }}">
+                    </div>
+                </div>
+                <div class="input-label-group">
+                    <label>Last Name *</label>
+                    <div class="input-group">
+                        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group double-group">
+                <div class="input-label-group">
+                    <label>Date of Birth</label>
+                    <div class="input-group">
+                        <input type="text" id="dob" value="{{ user.dob }}" disabled style="background-color: #e9ecef;">
+                    </div>
+                </div>
+                <div class="input-label-group">
+                    <label>Age</label>
+                    <div class="input-group">
+                        <input type="text" id="age" value="{{ user.age }}" disabled style="background-color: #e9ecef;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">Contact Information</div>
+            
+            <div class="form-group double-group">
+                <div class="input-label-group">
+                    <label>Contact Number *</label>
+                    <div class="input-group">
+                        <input type="text" id="contact_number" name="contact_number" value="{{ user.contact }}" required>
+                    </div>
+                </div>
+                <div class="input-label-group">
+                    <label>Email *</label>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">Address Information</div>
+            
+            <div class="form-group triple-group">
+                <div class="input-label-group">
+                    <label>Barangay *</label>
+                    <div class="input-group">
+                        <input type="text" id="barangay" name="barangay" value="{{ user.address.split(',')[0].strip() if user.address }}" required>
+                    </div>
+                </div>
+                <div class="input-label-group">
+                    <label>City/Municipality *</label>
+                    <div class="input-group">
+                        <input type="text" id="city_municipality" name="city_municipality" value="{{ user.address.split(',')[1].strip() if user.address }}" required>
+                    </div>
+                </div>
+                <div class="input-label-group">
+                    <label>ZIP Code *</label>
+                    <div class="input-group">
+                        <input type="text" id="zip_code" name="zip_code" value="{{ user.address.split(',')[3].strip() if user.address and user.address.split(',')|length > 3 else '' }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group full-width-group">
+                <div class="input-label-group">
+                    <label>Full Address</label>
+                    <div class="input-group">
+                        <input type="text" id="full_address" value="{{ user.address }}" disabled style="background-color: #e9ecef;">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="profile-btn" id="updateProfileBtn">Update Profile</button>
+            <a href="{{ url_for('main.profile') }}" class="profile-btn back-btn">Back to Profile</a>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const updateProfileBtn = document.getElementById('updateProfileBtn');
+    const profileForm = document.getElementById('profileForm');
+    const actionInput = document.getElementById('action');
+
+    // Add custom CSS for SweetAlert popup
+    const style = document.createElement('style');
+    style.textContent = `
+        .custom-otp-popup {
+            background-color: #d7e6fa !important;
+            border: 1px solid #151435 !important;
+            border-radius: 15px !important;
+            box-shadow: 0 0 15px rgba(21, 20, 53, 0.2) !important;
+            max-width: 500px !important;
+            width: 90% !important;
+            color: #151435 !important;
+            padding: 20px !important;
+        }
+
+        .custom-otp-title {
+            color: #151435 !important;
+            font-weight: 700 !important;
+            font-size: 1.8rem !important;
+            text-align: center !important;
+            margin-bottom: 20px !important;
+        }
+
+        .custom-otp-html {
+            color: #151435 !important;
+            text-align: left !important;
+            width: 100% !important;
+        }
+
+        .custom-otp-confirm-btn {
+            background-color: #151435 !important;
+            color: #d7e6fa !important;
+            border: none !important;
+            border-radius: 20px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            padding: 12px 30px !important;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s !important;
+            box-shadow: 0 4px 8px rgba(21, 20, 53, 0.2) !important;
+            width: 100% !important;
+            margin-top: 10px !important;
+        }
+
+        .custom-otp-confirm-btn:hover {
+            background-color: #2c3e50 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .custom-otp-cancel-btn {
+            background-color: transparent !important;
+            color: #151435 !important;
+            border: 1px solid #151435 !important;
+            border-radius: 20px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            padding: 12px 30px !important;
+            transition: all 0.3s !important;
+            width: 100% !important;
+            margin-top: 5px !important;
+        }
+
+        .custom-otp-cancel-btn:hover {
+            background-color: #151435 !important;
+            color: #d7e6fa !important;
+        }
+
+        .otp-popup-container {
+            width: 100%;
+        }
+
+        .otp-display {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #151435;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #151435;
+        }
+
+        .otp-timer {
+            font-weight: bold;
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .otp-input-group {
+            margin-bottom: 15px;
+        }
+
+        .otp-input-group label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #151435;
+            display: block;
+        }
+
+        .otp-input {
+            width: 100% !important;
+            padding: 12px !important;
+            border: 1px solid #151435 !important;
+            border-radius: 6px !important;
+            background-color: #ffffff !important;
+            color: #151435 !important;
+            font-size: 18px !important;
+            font-weight: bold !important;
+            text-align: center !important;
+            letter-spacing: 2px !important;
+            box-sizing: border-box !important;
+        }
+
+        .otp-input:focus {
+            border-color: #2c3e50 !important;
+            box-shadow: 0 0 5px rgba(21, 20, 53, 0.2) !important;
+            outline: none !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Function to show OTP popup
+    function showOtpPopup(otpCode) {
+        let timeLeft = 180; // 3 minutes
+        
+        Swal.fire({
+            title: "OTP Verification Required",
+            html: `
+                <div class="otp-popup-container">
+                    <div class="otp-display">
+                        Your OTP: ${otpCode}
+                    </div>
+                    <p class="otp-timer" id="otp-timer">Time remaining: 3:00</p>
+                    
+                    <div class="otp-input-group">
+                        <label>Enter OTP (6 digits)</label>
+                        <input type="text" id="otpInput" class="otp-input" placeholder="000000" maxlength="6" required>
+                    </div>
+                </div>
+            `,
+            confirmButtonText: "Verify & Update Profile",
+            confirmButtonClass: "custom-otp-confirm-btn",
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+            cancelButtonClass: "custom-otp-cancel-btn",
+            allowOutsideClick: false,
+            customClass: {
+                popup: 'custom-otp-popup',
+                title: 'custom-otp-title',
+                htmlContainer: 'custom-otp-html'
+            },
+            preConfirm: async () => {
+                const otp = document.getElementById('otpInput').value.trim();
+                
+                if (!otp) {
+                    Swal.showValidationMessage("Please enter OTP!");
+                    return false;
+                }
+
+                if (otp.length !== 6) {
+                    Swal.showValidationMessage("OTP must be 6 digits!");
+                    return false;
+                }
+
+                // Prepare form data with OTP
+                const formData = new FormData(profileForm);
+                formData.append('otp', otp);
+                formData.append('action', 'verify_otp');
+
+                try {
+                    const response = await fetch("{{ url_for('main.edit_profile') }}", {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.redirected) {
+                        // If redirected, it means success - reload to see the success message
+                        window.location.href = "{{ url_for('main.profile') }}";
+                        return true;
+                    } else {
+                        const result = await response.json();
+                        if (result.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: result.message,
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = "{{ url_for('main.profile') }}";
+                            });
+                            return true;
+                        } else {
+                            Swal.showValidationMessage(result.message);
+                            return false;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    Swal.showValidationMessage('Server error occurred!');
+                    return false;
+                }
+            },
+            didOpen: () => {
+                // OTP input validation - only numbers
+                const otpInput = document.getElementById('otpInput');
+                otpInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/\D/g, '').slice(0, 6);
+                });
+
+                // Auto-focus on OTP input
+                otpInput.focus();
+
+                // Timer countdown
+                const timerInterval = setInterval(() => {
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        const timerElement = document.getElementById('otp-timer');
+                        if (timerElement) {
+                            timerElement.innerHTML = "OTP Expired!";
+                            timerElement.style.color = "red";
+                        }
+                        return;
+                    }
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    const timerElement = document.getElementById('otp-timer');
+                    if (timerElement) {
+                        timerElement.innerHTML = `Time remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+                    }
+                    timeLeft--;
+                }, 1000);
+            }
+        });
+    }
+
+    // Update profile button click handler
+    updateProfileBtn.addEventListener('click', async function() {
+        // Basic form validation
+        const requiredFields = ['first_name', 'last_name', 'contact_number', 'email', 'barangay', 'city_municipality', 'zip_code'];
+        let isValid = true;
+
+        for (const field of requiredFields) {
+            const input = document.getElementById(field);
+            if (!input.value.trim()) {
+                isValid = false;
+                input.style.borderColor = 'red';
+            } else {
+                input.style.borderColor = '#151435';
+            }
+        }
+
+        if (!isValid) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Missing Information',
+                text: 'Please fill all required fields.'
+            });
+            return;
+        }
+
+        // Send OTP request
+        try {
+            updateProfileBtn.disabled = true;
+            updateProfileBtn.textContent = 'Sending OTP...';
+
+            const response = await fetch("{{ url_for('main.profile_send_otp') }}", {
+                method: 'POST'
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                // Show OTP popup
+                showOtpPopup(result.otp);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: result.message
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Server Error',
+                text: 'Failed to send OTP. Please try again.'
+            });
+        } finally {
+            updateProfileBtn.disabled = false;
+            updateProfileBtn.textContent = 'Update Profile';
+        }
+    });
+});
+</script>
+
+{% endblock %}

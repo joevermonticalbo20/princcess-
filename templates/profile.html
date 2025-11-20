@@ -1,0 +1,196 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+
+  :root {
+      --text-dark-navy: #151435;
+      --card-bg: #f7f7f7; 
+      --border-color: #c0c0c0;
+      --primary-color: var(--text-dark-navy); 
+      --secondary-bg: var(--card-bg); 
+  }
+
+  .content-box {
+      max-width: 400px !important; 
+  }
+
+  .stars, .shooting-star {
+    display: none !important;
+  }
+  
+  .profile-image { 
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(21, 20, 53, 0.2);
+  }
+
+  .profile-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+  }
+
+  .profile-title {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 25px;
+  }
+
+  .profile-info {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+  }
+
+  .profile-info p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-dark-navy);
+    line-height: 1.5;
+  }
+
+  .profile-info strong {
+    color: var(--primary-color);
+    min-width: 90px;
+    display: inline-block;
+  }
+
+  /* === Buttons - Ginaya ang styles mula sa Home.html === */
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  
+  .btn-primary-style {
+    background-color: var(--text-dark-navy);
+    color: #fff;
+  }
+
+  .btn-primary-style:hover {
+    background-color: #2c3e50;
+  }
+
+  .profile-buttons {
+    margin-top: 20px;
+  }
+
+
+  /*Alert Box*/
+  .alert {
+    background: #fdeaea; 
+    border: 1px solid #151435; 
+    color: #151435; 
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 500;
+
+  }
+
+  /*Success Notification*/
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #e6f0ff; 
+    border: 1px solid #a8b0bf;
+    color: var(--text-dark-navy);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: none;
+    z-index: 99;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    animation: fadeInOut 4s ease forwards;
+  }
+
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-20px); }
+  }
+
+  @media (max-width: 450px) {
+    .content-box {
+      width: 90%;
+      padding: 30px 25px;
+    }
+  }
+</style>
+
+<div class="notification" id="successNotify">
+  Successfully Registered! Welcome to the system.
+</div>
+
+<div class="alert" id="alertBox"></div> <div class="profile-name">{{ user.first_name }} {{ user.middle_name or '' }} {{ user.last_name }}</div>
+<div class="profile-title">{{ user.role or "Member" }}</div>
+
+<div class="profile-info" id="profileInfo">
+  <p><strong>Username:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>DOB:</strong> {{ user.dob }} (Age: {{ user.age }})</p>
+  <p><strong>Contact:</strong> {{ user.contact }}</p>
+</div>
+
+<div class="profile-buttons">
+  <a href="{{ url_for('main.edit_profile') }}" id="editProfileBtn" class="btn btn-primary-style">Edit Profile</a> 
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const alertBox = document.getElementById("alertBox");
+    const successNotify = document.getElementById("successNotify");
+
+    const username = `{{ user.username|default('', true) }}`;
+    const email = `{{ user.email|default('', true) }}`;
+    const contact = `{{ user.contact|default('', true) }}`;
+    const dob = `{{ user.dob|default('', true) }}`;
+
+    //Validate Profile Info
+    let errors = [];
+    if (!username.trim()) errors.push("Username is missing.");
+    if (!email.trim() || !email.includes("@")) errors.push("Invalid or missing email.");
+    if (!contact.trim() || contact.length < 7) errors.push("Contact number is too short.");
+    if (!dob.trim()) errors.push("Date of birth is missing.");
+
+    if (errors.length > 0) {
+      alertBox.style.display = "block";
+      alertBox.innerHTML = errors.join("<br>");
+    } else {
+      alertBox.style.display = "none";
+      
+      if (document.referrer.includes('register')) { 
+        successNotify.style.display = "block";
+        setTimeout(() => {
+          successNotify.style.display = "none";
+        }, 4000);
+      }
+    }
+
+    //Confirmation Before Editing
+    const editBtn = document.getElementById("editProfileBtn");
+    editBtn.addEventListener("click", function(e) {
+      const confirmEdit = confirm("Are you sure you want to change your information?");
+      if (!confirmEdit) {
+        e.preventDefault();
+      }
+    });
+  });
+</script>
+{% endblock %}
